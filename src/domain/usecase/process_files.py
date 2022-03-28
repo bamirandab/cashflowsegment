@@ -45,6 +45,8 @@ class ProcessXlsxFiles:
             data = [[cell.value for cell in row] for row in self.ws['A{}:F{}'.format(ceil, floor)]]
             temporal_df = pd.DataFrame(data[1:], columns=data[0])
             df = pd.concat([df, temporal_df], axis=0)
+            df['VALOR'] = df['VALOR'].astype(str)
+            df['VALOR'] = df['VALOR'].apply(lambda x: x.replace(',', '')).astype(float)
         self.calculate_date(df, year)
         return df
 
